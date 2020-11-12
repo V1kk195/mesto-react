@@ -9,7 +9,7 @@ function Popup(props) {
     return (
         <div className={`popup popup_type_${formName} ${isOpen && 'popup_is-opened'}`}>
             <div className="field-not-clickable popup__content" id="popup-content">
-                <img src={closeIcon} alt="" className="popup__close new-card__close" />
+                <img src={closeIcon} alt="" className="popup__close new-card__close" onClick={props.onClose} />
                 <div className="field-not-clickable">
                     <h3 className="popup__title field-not-clickable">{formTitle}</h3>
                     <form className="popup__form field-not-clickable" id="popup" name={formName}>
