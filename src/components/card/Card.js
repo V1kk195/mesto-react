@@ -1,8 +1,12 @@
 import React from 'react';
 
 function Card(props) {
+    const handleClick = (e) => {
+        props.onCardClick(e.target.style.backgroundImage.slice(4, -1).replace(/['"]/g, ""));
+    }
+
     return (
-        <div className="place-card">
+        <div className="place-card" onClick={handleClick}>
             <div className="place-card">
                 <div className="place-card__image" style={{ backgroundImage: `url(${props.image})`}}>
                     <button className="place-card__delete-icon"></button>

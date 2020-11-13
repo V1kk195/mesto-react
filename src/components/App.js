@@ -3,12 +3,14 @@ import React from 'react';
 import Header from "./header/Header";
 import Main from "./main/Main";
 import Popup from "./popup/Popup";
+import ImagePopup from "./imagePopup/ImagePopup";
 
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+    const [selectedCard, setSelectedCard] = React.useState(null);
 
     const handleEditAvatarClick = () => {
         setIsEditAvatarPopupOpen(true);
@@ -22,10 +24,15 @@ function App() {
         setIsAddPlacePopupOpen(true);
     }
 
+    const handleCardClick = (e) => {
+        setSelectedCard(e);
+    }
+
     const closeAllPopups = () => {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
+        setSelectedCard(null);
     }
 
     return (
@@ -35,6 +42,7 @@ function App() {
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}
+              onCardClick={handleCardClick}
           >
               <Popup title="Редактировать профиль" name="user-profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
                   <input type="text" name="username" id="username" required className="popup__input popup__input_type_username field-not-clickable" placeholder="Имя" />
@@ -51,6 +59,8 @@ function App() {
                   <span className="error-message" id="error-link" />
                   <button type className="button popup__button field-not-clickable">+</button>
               </Popup>
+
+              <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
           </Main>
 

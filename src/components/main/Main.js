@@ -26,7 +26,7 @@ function Main(props) {
         Api.getInitialCards()
             .then(data => {
                 if(!Array.isArray(data)) return  Promise.reject(data.message);
-                setCards(data);
+                setCards(data.splice(0,6));
             })
             .catch(err => {
                 console.log(err);
@@ -51,7 +51,7 @@ function Main(props) {
 
             <div className="places-list root__section">
                 {cards.map((card, i) => (
-                    <Card key={card._id} image={card.link} name={card.name} likes={card.likes.length} />
+                    <Card key={card._id} image={card.link} name={card.name} likes={card.likes.length} onCardClick={props.onCardClick} />
                 ))}
             </div>
 
