@@ -74,16 +74,3 @@ function Main(props) {
 }
 
 export default Main;
-
-// createdAt: "2020-04-17T17:25:58.616Z"
-// likes: (11) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-// link: "https://avatars.mds.yandex.net/get-pdb/202366/454455e8-1665-4dca-bf63-207efd51e0d7/s1200"
-// name: "Тигруша 2"
-// owner:
-//     about: "Охота и рыбалка"
-// avatar: "https://avatars.mds.yandex.net/get-pdb/202366/454455e8-1665-4dca-bf63-207efd51e0d7/s1200"
-// cohort: "cohort10"
-// name: "Тигруша"
-// _id: "ebd5818b69420092f498d150"
-// __proto__: Object
-// _id: "5e99e6a669fae7001f72cfb4"
