@@ -4,9 +4,6 @@ import Card from "../card/Card";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Main(props) {
-    const [userName, setUserName] = React.useState('');
-    const [userDescription, setUserDescription] = React.useState('');
-    const [userAvatar, setUserAvatar] = React.useState('');
     const [cards, setCards] = React.useState([]);
     const currentUser = React.useContext(CurrentUserContext);
 
@@ -14,7 +11,7 @@ function Main(props) {
         Api.getInitialCards()
             .then(data => {
                 if(!Array.isArray(data)) return  Promise.reject(data.message);
-                setCards(data.splice(0,6));
+                setCards(data.splice(0,14));
             })
             .catch(err => {
                 console.log(err);
@@ -39,7 +36,7 @@ function Main(props) {
 
             <div className="places-list root__section">
                 {cards.map((card, i) => (
-                    <Card key={card._id} image={card.link} name={card.name} likes={card.likes.length} onCardClick={props.onCardClick} />
+                    <Card key={card._id} image={card.link} name={card.name} likes={card.likes.length} owner={card.owner} onCardClick={props.onCardClick} />
                 ))}
             </div>
 
