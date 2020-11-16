@@ -65,7 +65,7 @@ function App() {
                         <span className="error-message" id="error-username"></span>
                         <input type="text" name="about" id="about" required className="popup__input popup__input_type_about field-not-clickable" placeholder="О себе" />
                         <span className="error-message" id="error-about"></span>
-                        <button type className="edit-profile__button field-not-clickable" id="edit-profile__button">Сохранить</button>
+                        <button type="button" className="edit-profile__button field-not-clickable" id="edit-profile__button">Сохранить</button>
                     </Popup>
 
                     <Popup title="Новое место" name="new" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
@@ -73,7 +73,7 @@ function App() {
                         <span className="error-message" id="error-imgname" />
                         <input type="URL" name="link" id="link" className="popup__input popup__input_type_link-url field-not-clickable" placeholder="Ссылка на картинку" />
                         <span className="error-message" id="error-link" />
-                        <button type className="button popup__button field-not-clickable">+</button>
+                        <button type="button" className="button popup__button field-not-clickable">+</button>
                     </Popup>
 
                     <ImagePopup card={selectedCard} onClose={closeAllPopups} />
