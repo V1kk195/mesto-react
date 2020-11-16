@@ -1,5 +1,5 @@
 import React from 'react';
-import Api from '../../utils/api';
+import api from '../../utils/api';
 import Card from "../card/Card";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -8,7 +8,7 @@ function Main(props) {
     const currentUser = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
-        Api.getInitialCards()
+        api.getInitialCards()
             .then(data => {
                 if(!Array.isArray(data)) return  Promise.reject(data.message);
                 setCards(data.splice(0,14));
@@ -18,6 +18,26 @@ function Main(props) {
                 return err;
             })
     }, []);
+
+    const handleCardLike = (card) => {
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        const updateCard = (newCard) => {
+            const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+            setCards(newCards);
+        }
+
+        if(isLiked) {
+            api.removeLike(card._id)
+                .then(newCard => {
+                    updateCard(newCard);
+                })
+        } else {
+            api.putLike(card._id)
+                .then(newCard => {
+                    updateCard(newCard);
+                })
+        }
+    }
 
     return (
         <main>
@@ -36,7 +56,8 @@ function Main(props) {
 
             <div className="places-list root__section">
                 {cards.map((card, i) => (
-                    <Card key={card._id} image={card.link} name={card.name} likes={card.likes.length} owner={card.owner} onCardClick={props.onCardClick} />
+                    <Card key={card._id} image={card.link} name={card.name} likes={card.likes.length} owner={card.owner}
+                          onCardClick={props.onCardClick} onCardLike={handleCardLike} card={card} />
                 ))}
             </div>
 

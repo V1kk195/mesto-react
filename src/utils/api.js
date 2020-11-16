@@ -112,7 +112,7 @@ class Api {
     }
 
     putLike(cardId) {
-        fetch(`${this.url}/cards/like/${cardId}`, {
+        return fetch(`${this.url}/cards/like/${cardId}`, {
             method: 'PUT',
             headers: {
                 authorization: this.authorization
@@ -130,7 +130,7 @@ class Api {
     }
 
     removeLike(cardId) {
-        fetch(`${this.url}/cards/like/${cardId}`, {
+        return fetch(`${this.url}/cards/like/${cardId}`, {
             method: 'DELETE',
             headers: {
                 authorization: this.authorization
