@@ -39,6 +39,14 @@ function Main(props) {
         }
     }
 
+    const handleCardDelete = (card) => {
+        api.deleteCard(card._id)
+            .then((data) => {
+                const newCards = cards.filter(c => c._id !== card._id);
+                setCards(newCards);
+            })
+    }
+
     return (
         <main>
             <div className="profile root__section">
@@ -57,7 +65,7 @@ function Main(props) {
             <div className="places-list root__section">
                 {cards.map((card, i) => (
                     <Card key={card._id} image={card.link} name={card.name} likes={card.likes.length} owner={card.owner}
-                          onCardClick={props.onCardClick} onCardLike={handleCardLike} card={card} />
+                          onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} card={card} />
                 ))}
             </div>
 

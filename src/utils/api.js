@@ -20,10 +20,6 @@ class Api {
                 }
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
-                // Done Надо исправить (Спринт 9): Класс Api и данный метод, в частности, не должны изменять DOM,
-                // он отвечает лишь за отправку запросов и получение информации с сервера.
-                // Давайте исправим это, с остальными методами класса Api в этом плане всё в порядке.
-
             .catch(err => {
                 return err;
             })
@@ -55,11 +51,6 @@ class Api {
                 'Content-Type': this.contentType
             },
             body: JSON.stringify({ name, about })
-                // Можно лучше (Спринт 9): Здесь нет необходимости использовать интерполяцию строк, можно написать короче:
-                //
-                // body: JSON.stringify({ name, about });
-                //
-    
         })
         .then(res => {
             if (res.ok) {
@@ -79,7 +70,6 @@ class Api {
                 authorization: this.authorization,
                 'Content-Type': this.contentType
             },
-            // Можно лучше (Спринт 9): Нет необходимости использовать интерполяцию строк.
             body: JSON.stringify({ name, link })
         })
         .then(res => {
