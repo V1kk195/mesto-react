@@ -1,7 +1,7 @@
 import React from 'react';
 import closeIcon from "../../images/close.svg";
 
-function Popup(props) {
+function PopupWithForm(props) {
     const formName = props.name;
     const formTitle = props.title;
     const isOpen = props.isOpen;
@@ -21,4 +21,4 @@ function Popup(props) {
     );
 }
 
-export default Popup;
+export default PopupWithForm;

@@ -2,8 +2,9 @@ import React from 'react';
 
 import Header from "./header/Header";
 import Main from "./main/Main";
-import Popup from "./popup/Popup";
+import PopupWithForm from "./popupWithForm/PopupWithForm";
 import ImagePopup from "./imagePopup/ImagePopup";
+import EditProfilePopup from "./editProfilePopup/EditProfilePopup";
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -60,21 +61,16 @@ function App() {
                     onEditAvatar={handleEditAvatarClick}
                     onCardClick={handleCardClick}
                 >
-                    <Popup title="Редактировать профиль" name="user-profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-                        <input type="text" name="username" id="username" required className="popup__input popup__input_type_username field-not-clickable" placeholder="Имя" />
-                        <span className="error-message" id="error-username"></span>
-                        <input type="text" name="about" id="about" required className="popup__input popup__input_type_about field-not-clickable" placeholder="О себе" />
-                        <span className="error-message" id="error-about"></span>
-                        <button type="button" className="edit-profile__button field-not-clickable" id="edit-profile__button">Сохранить</button>
-                    </Popup>
 
-                    <Popup title="Новое место" name="new" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+                    <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+
+                    <PopupWithForm title="Новое место" name="new" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
                         <input type="text" name="name" id="imgname" className="popup__input popup__input_type_name field-not-clickable" placeholder="Название" />
                         <span className="error-message" id="error-imgname" />
                         <input type="URL" name="link" id="link" className="popup__input popup__input_type_link-url field-not-clickable" placeholder="Ссылка на картинку" />
                         <span className="error-message" id="error-link" />
                         <button type="button" className="button popup__button field-not-clickable">+</button>
-                    </Popup>
+                    </PopupWithForm>
 
                     <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
