@@ -51,6 +51,13 @@ function App() {
         setSelectedCard(null);
     }
 
+    const handleUpdateUser = () => {
+        api.editUserInfo()
+            .then(user => {
+                setCurrentUser(user);
+            })
+    }
+
     return (
         <>
             <CurrentUserContext.Provider value={currentUser}>
@@ -62,7 +69,7 @@ function App() {
                     onCardClick={handleCardClick}
                 >
 
-                    <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+                    <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
                     <PopupWithForm title="Новое место" name="new" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
                         <input type="text" name="name" id="imgname" className="popup__input popup__input_type_name field-not-clickable" placeholder="Название" />
