@@ -1,6 +1,8 @@
 import React from 'react';
 import PopupWithForm from "../popupWithForm/PopupWithForm";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import formValidator from "../../utils/formValidator";
+
 
 function EditProfilePopup(props) {
     const [name, setName] = React.useState('');
@@ -10,6 +12,9 @@ function EditProfilePopup(props) {
     React.useEffect(() => {
         setName(currentUser.name || '');
         setDescription(currentUser.about || '');
+        const validationUser = new formValidator(document.forms['user-profile']);
+        validationUser.setEventListeners();
+        validationUser.setSubmitButtonState();
     }, [currentUser])
 
     const handleNameChange = (e) => {
@@ -22,10 +27,7 @@ function EditProfilePopup(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.onUpdateUser({
-            name,
-            about: description,
-        });
+        props.onUpdateUser(name, description);
     }
 
     return (
@@ -36,7 +38,7 @@ function EditProfilePopup(props) {
             <input type="text" value={description} name="about" id="about" required className="popup__input popup__input_type_about field-not-clickable"
                    placeholder="О себе" onChange={handleDescriptionChange} />
             <span className="error-message" id="error-about" />
-            <button type="button" className="edit-profile__button field-not-clickable" id="edit-profile__button">Сохранить</button>
+            <button className="edit-profile__button popup__button field-not-clickable" id="edit-profile__button">Сохранить</button>
         </PopupWithForm>
     )
 }

@@ -51,10 +51,18 @@ function App() {
         setSelectedCard(null);
     }
 
-    const handleUpdateUser = () => {
-        api.editUserInfo()
+    const handleUpdateUser = (name, about) => {
+        api.editUserInfo(name, about)
             .then(user => {
+                if(!user.name) {
+                   return;
+                }
                 setCurrentUser(user);
+                closeAllPopups();
+            })
+            .catch(err => {
+                console.log(err);
+                return err;
             })
     }
 
