@@ -5,6 +5,7 @@ import Main from "./main/Main";
 import PopupWithForm from "./popupWithForm/PopupWithForm";
 import ImagePopup from "./imagePopup/ImagePopup";
 import EditProfilePopup from "./editProfilePopup/EditProfilePopup";
+import AddPlacePopup from "./addPlacePopup/AddPlacePopup";
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -79,13 +80,7 @@ function App() {
 
                     <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-                    <PopupWithForm title="Новое место" name="new" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-                        <input type="text" name="name" id="imgname" className="popup__input popup__input_type_name field-not-clickable" placeholder="Название" />
-                        <span className="error-message" id="error-imgname" />
-                        <input type="URL" name="link" id="link" className="popup__input popup__input_type_link-url field-not-clickable" placeholder="Ссылка на картинку" />
-                        <span className="error-message" id="error-link" />
-                        <button type="button" className="button popup__button field-not-clickable">+</button>
-                    </PopupWithForm>
+                    <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
 
                     <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
