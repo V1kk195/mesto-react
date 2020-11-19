@@ -1,8 +1,8 @@
 export default class FormValidator {
     //конструктор должен принимать один из двух аргументов: элемент формы или элемент попапа, внутри которого находится эта форма.
-    constructor (form) {
+    constructor (form, button) {
       this.form = form;
-      this.submitButton = document.querySelector(`.${this.form.id}__button`);
+      this.submitButton = button;
     }
   
     // Возвращает true если длина больше 1 и меньше 30
@@ -46,13 +46,14 @@ export default class FormValidator {
   
     //чтобы делать кнопку сабмита активной и неактивной. Состояние кнопки сабмита зависит от того, прошли все поля валидацию или нет. Этот метод должен вызываться при любом изменении данных формы. Если поля в порядке, кнопка становится активной. Если одно из полей не прошло валидацию, или пользователь его не заполнил, — кнопка неактивна.
     setSubmitButtonState () {
-      if (Array.from(document.querySelectorAll('.popup__input')).every((elem) => elem.valid !== false)) {
-        this.submitButton.removeAttribute('disabled');
-        this.submitButton.classList.add(`${this.form.id}__button_active`);
-      } else {
-        this.submitButton.setAttribute('disabled', true);
-        this.submitButton.classList.remove(`${this.form.id}__button_active`);
-      }
+        if(!this.submitButton) return;
+        if (Array.from(document.querySelectorAll('.popup__input')).every((elem) => elem.valid !== false)) {
+            this.submitButton.removeAttribute('disabled');
+            this.submitButton.classList.add(`${this.form.id}__button_active`);
+        } else {
+            this.submitButton.setAttribute('disabled', true);
+            this.submitButton.classList.remove(`${this.form.id}__button_active`);
+        }
   
     }
   

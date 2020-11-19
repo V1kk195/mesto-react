@@ -98,7 +98,7 @@ function App() {
         api.editUserInfo(name, about)
             .then(user => {
                 if(!user.name) {
-                   return;
+                   throw new Error(`${user}`);
                 }
                 setCurrentUser(user);
                 closeAllPopups();
@@ -109,8 +109,19 @@ function App() {
             })
     }
 
-    const handleAddPlaceSubmit = () => {
-
+    const handleAddPlaceSubmit = (name, link) => {
+        api.addNewCard(name, link)
+            .then((newCard) => {
+                if(!newCard.name) {
+                    throw new Error(`${newCard}`);
+                }
+                setCards([...cards, newCard]);
+                closeAllPopups();
+            })
+            .catch(err => {
+                console.log(err);
+                return err;
+            })
     }
 
     return (
@@ -129,7 +140,7 @@ function App() {
 
                     <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-                    <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+                    <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
 
                     <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 

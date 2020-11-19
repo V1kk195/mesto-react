@@ -1,18 +1,42 @@
 import React from 'react';
 import PopupWithForm from "../popupWithForm/PopupWithForm";
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import formValidator from "../../utils/formValidator";
 
 function AddPlacePopup(props) {
+    const [name, setName] = React.useState('');
+    const [link, setLink] = React.useState('');
+    const buttonRef = React.useRef();
 
+    React.useEffect(() => {
+        const validationUser = new formValidator(document.forms['new-card'], buttonRef.current);
+        validationUser.setEventListeners();
+        validationUser.setSubmitButtonState();
+    }, [])
+
+    const handleNameChange = (e) => {
+        setName(e.target.value);
+    }
+
+    const handleLinkChange = (e) => {
+        setLink(e.target.value);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.onAddPlace(name, link);
+        setName('');
+        setLink('');
+    }
 
     return (
-        <PopupWithForm title="Новое место" name="new" isOpen={props.isOpen} onClose={props.onClose}>
-            <input type="text" name="name" id="imgname" className="popup__input popup__input_type_name field-not-clickable" placeholder="Название" />
+        <PopupWithForm title="Новое место" name="new-card" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} >
+            <input value={name} type="text" name="name" id="imgname" className="popup__input popup__input_type_name field-not-clickable"
+                   placeholder="Название" onChange={handleNameChange} />
             <span className="error-message" id="error-imgname" />
-            <input type="URL" name="link" id="link" className="popup__input popup__input_type_link-url field-not-clickable" placeholder="Ссылка на картинку" />
+            <input value={link} type="URL" name="link" id="link" className="popup__input popup__input_type_link-url field-not-clickable"
+                   placeholder="Ссылка на картинку" onChange={handleLinkChange} />
             <span className="error-message" id="error-link" />
-            <button type="button" className="button popup__button field-not-clickable">+</button>
+            <button ref={buttonRef} type="submit" className="button popup__button field-not-clickable">+</button>
         </PopupWithForm>
     )
 }
