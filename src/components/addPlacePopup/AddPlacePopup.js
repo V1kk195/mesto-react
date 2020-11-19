@@ -8,9 +8,10 @@ function AddPlacePopup(props) {
     const buttonRef = React.useRef();
 
     React.useEffect(() => {
-        const validationUser = new formValidator(document.forms['new-card'], buttonRef.current);
-        validationUser.setEventListeners();
-        validationUser.setSubmitButtonState();
+        const validationCard = new formValidator(document.forms['new-card'], buttonRef.current);
+        validationCard.checkValidityInitial();
+        validationCard.setEventListeners();
+        validationCard.setSubmitButtonState();
     }, [])
 
     const handleNameChange = (e) => {
@@ -21,15 +22,24 @@ function AddPlacePopup(props) {
         setLink(e.target.value);
     }
 
+    const handleClose = () => {
+        props.onClose();
+        clearInput();
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         props.onAddPlace(name, link);
+        clearInput();
+    }
+
+    const clearInput = () => {
         setName('');
         setLink('');
     }
 
     return (
-        <PopupWithForm title="Новое место" name="new-card" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} >
+        <PopupWithForm title="Новое место" name="new-card" isOpen={props.isOpen} onClose={handleClose} onSubmit={handleSubmit} >
             <input value={name} type="text" name="name" id="imgname" className="popup__input popup__input_type_name field-not-clickable"
                    placeholder="Название" onChange={handleNameChange} />
             <span className="error-message" id="error-imgname" />
