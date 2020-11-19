@@ -40,6 +40,7 @@ class Api {
             })
             .catch(err => {
                 console.log(err);
+                return err;
             })
     }
     
@@ -60,6 +61,28 @@ class Api {
         })
         .catch(err => {
             console.log(err);
+            return err;
+        })
+    }
+
+    editAvatar(avatar) {
+        return fetch(`${this.url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: {
+                authorization: this.authorization,
+                'Content-Type': this.contentType
+            },
+            body: JSON.stringify({ avatar })
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .catch(err => {
+            console.log(err);
+            return err;
         })
     }
   
@@ -80,6 +103,7 @@ class Api {
         })
         .catch(err => {
             console.log(err);
+            return err;
         })
     }
 
@@ -98,6 +122,7 @@ class Api {
         })
         .catch(err => {
             console.log(err);
+            return err;
         })
     }
 
@@ -116,6 +141,7 @@ class Api {
         })
         .catch(err => {
             console.log(err);
+            return err;
         })
     }
 
@@ -134,6 +160,7 @@ class Api {
         })
         .catch(err => {
             console.log(err);
+            return err;
         })
     }
 

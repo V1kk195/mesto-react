@@ -9,7 +9,7 @@ function Main(props) {
         <main>
             <div className="profile root__section">
                 <div className="user-info">
-                    <div className="user-info__photo" style={{ backgroundImage: `url(${currentUser.avatar})` }} />
+                    <div className="user-info__photo" style={{ backgroundImage: `url(${currentUser.avatar})` }} onClick={props.onEditAvatar} />
                     <div className="user-info__data">
                         <h1 className="user-info__name">{currentUser.name}</h1>
                         <p className="user-info__job">{currentUser.about}</p>

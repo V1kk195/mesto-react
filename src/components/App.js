@@ -4,6 +4,7 @@ import Header from "./header/Header";
 import Main from "./main/Main";
 import ImagePopup from "./imagePopup/ImagePopup";
 import EditProfilePopup from "./editProfilePopup/EditProfilePopup";
+import EditAvatarPopup from "./editAvatarPopup/EditAvatarPopup";
 import AddPlacePopup from "./addPlacePopup/AddPlacePopup";
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -93,6 +94,20 @@ function App() {
             })
     }
 
+    const handleUpdateAvatar = (link) => {
+        api.editAvatar(link)
+            .then(user => {
+                if(!user.name) {
+                    throw new Error(`${user}`);
+                }
+                setCurrentUser(user);
+                closeAllPopups();
+            })
+            .catch(err => {
+                console.log(err);
+                return err;
+            })
+    }
 
     const handleUpdateUser = (name, about) => {
         api.editUserInfo(name, about)
@@ -139,6 +154,8 @@ function App() {
                 >
 
                     <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+
+                    <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
                     <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
 
