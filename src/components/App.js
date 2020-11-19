@@ -2,7 +2,6 @@ import React from 'react';
 
 import Header from "./header/Header";
 import Main from "./main/Main";
-import PopupWithForm from "./popupWithForm/PopupWithForm";
 import ImagePopup from "./imagePopup/ImagePopup";
 import EditProfilePopup from "./editProfilePopup/EditProfilePopup";
 import AddPlacePopup from "./addPlacePopup/AddPlacePopup";
@@ -16,6 +15,8 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [currentUser, setCurrentUser] = React.useState({});
+    const [cards, setCards] = React.useState([]);
+
 
     React.useEffect(() => {
         api.getUserInfo()
@@ -28,6 +29,18 @@ function App() {
                 return err;
             })
     }, [])
+
+    React.useEffect(() => {
+        api.getInitialCards()
+            .then(data => {
+                if(!Array.isArray(data)) return  Promise.reject(data.message);
+                setCards(data.splice(0,14));
+            })
+            .catch(err => {
+                console.log(err);
+                return err;
+            })
+    }, []);
 
     const handleEditAvatarClick = () => {
         setIsEditAvatarPopupOpen(true);
@@ -52,6 +65,35 @@ function App() {
         setSelectedCard(null);
     }
 
+    const handleCardLike = (card) => {
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        const updateCard = (newCard) => {
+            const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+            setCards(newCards);
+        }
+
+        if(isLiked) {
+            api.removeLike(card._id)
+                .then(newCard => {
+                    updateCard(newCard);
+                })
+        } else {
+            api.putLike(card._id)
+                .then(newCard => {
+                    updateCard(newCard);
+                })
+        }
+    }
+
+    const handleCardDelete = (card) => {
+        api.deleteCard(card._id)
+            .then(() => {
+                const newCards = cards.filter(c => c._id !== card._id);
+                setCards(newCards);
+            })
+    }
+
+
     const handleUpdateUser = (name, about) => {
         api.editUserInfo(name, about)
             .then(user => {
@@ -67,6 +109,10 @@ function App() {
             })
     }
 
+    const handleAddPlaceSubmit = () => {
+
+    }
+
     return (
         <>
             <CurrentUserContext.Provider value={currentUser}>
@@ -76,6 +122,9 @@ function App() {
                     onAddPlace={handleAddPlaceClick}
                     onEditAvatar={handleEditAvatarClick}
                     onCardClick={handleCardClick}
+                    cards={cards}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
                 >
 
                     <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />

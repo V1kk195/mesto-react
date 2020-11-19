@@ -4,6 +4,8 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import formValidator from "../../utils/formValidator";
 
 function AddPlacePopup(props) {
+
+
     return (
         <PopupWithForm title="Новое место" name="new" isOpen={props.isOpen} onClose={props.onClose}>
             <input type="text" name="name" id="imgname" className="popup__input popup__input_type_name field-not-clickable" placeholder="Название" />
