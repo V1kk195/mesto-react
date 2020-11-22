@@ -7,8 +7,10 @@ function EditProfilePopup(props) {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
     const buttonRef = React.useRef();
-    const [errors, setErrors] = React.useState({});
+    const [errors, setErrors] = React.useState({name: '', description: ''});
     const [formValid, setFormValid] = React.useState(false);
+    const [nameValid, setNameValid] = React.useState(false);
+    const [descriptionValid, setDescriptionValid] = React.useState(false);
 
     React.useEffect(() => {
         setName(currentUser.name || '');
@@ -16,8 +18,37 @@ function EditProfilePopup(props) {
     }, [currentUser])
 
     React.useEffect(() => {
-        validateForm();
+        const validateField = (fieldName, fieldValue) => {
+            if(fieldValue.trim() === '') {
+                setErrors((errs) => ({...errs, [fieldName]: 'Это обязательное поле'}));
+                fieldName === 'name' ? setNameValid(false) : setDescriptionValid(false);
+                return false;
+            }
+            if(!(fieldValue.trim().length > 1 && fieldValue.trim().length < 30)) {
+                setErrors((errs) => ({...errs, [fieldName]: 'Должно быть от 2 до 30 символов'}));
+                fieldName === 'name' ? setNameValid(false) : setDescriptionValid(false);
+                return false;
+            }
+            setErrors((errs) => ({...errs, [fieldName]: ''}));
+            fieldName === 'name' ? setNameValid(true) : setDescriptionValid(true);
+            return true;
+        }
+
+        validateField('name', name);
+        validateField('description', description);
     }, [name, description])
+
+    React.useEffect(() => {
+        const validateForm = () => {
+            if(nameValid && descriptionValid) {
+                return setFormValid(true);
+            }
+            return setFormValid(false);
+        }
+
+        validateForm();
+    }, [nameValid, descriptionValid])
+
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -37,27 +68,6 @@ function EditProfilePopup(props) {
         e.preventDefault();
         props.onUpdateUser(name, description);
     }
-
-    const validateField = (fieldName, fieldValue) => {
-        if(fieldValue.trim() === '') {
-            setErrors({...errors, [fieldName]: 'Это обязательное поле'});
-            return false;
-        }
-        if(!(fieldValue.trim().length > 1 && fieldValue.trim().length < 30)) {
-            setErrors({...errors, [fieldName]: 'Должно быть от 2 до 30 символов'});
-            return false;
-        }
-        setErrors({...errors, [fieldName]: ''});
-        return true;
-    }
-
-    const validateForm = () => {
-        if(validateField('name', name) && validateField('description', description)) {
-            return setFormValid(true);
-        }
-        return setFormValid(false);
-    }
-
 
     return (
         <PopupWithForm title="Редактировать профиль" name="user-profile" isOpen={props.isOpen} onClose={handleClose} onSubmit={handleSubmit} >
