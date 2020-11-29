@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/victoria31f/mesto-react/static/css/main.1e02d81d.chunk.css",
+    "main.js": "/victoria31f/mesto-react/static/js/main.985c3584.chunk.js",
+    "main.js.map": "/victoria31f/mesto-react/static/js/main.985c3584.chunk.js.map",
+    "runtime-main.js": "/victoria31f/mesto-react/static/js/runtime-main.560d73ee.js",
+    "runtime-main.js.map": "/victoria31f/mesto-react/static/js/runtime-main.560d73ee.js.map",
+    "static/js/2.ada7b4da.chunk.js": "/victoria31f/mesto-react/static/js/2.ada7b4da.chunk.js",
+    "static/js/2.ada7b4da.chunk.js.map": "/victoria31f/mesto-react/static/js/2.ada7b4da.chunk.js.map",
+    "static/js/3.d39934af.chunk.js": "/victoria31f/mesto-react/static/js/3.d39934af.chunk.js",
+    "static/js/3.d39934af.chunk.js.map": "/victoria31f/mesto-react/static/js/3.d39934af.chunk.js.map",
+    "index.html": "/victoria31f/mesto-react/index.html",
+    "static/css/main.1e02d81d.chunk.css.map": "/victoria31f/mesto-react/static/css/main.1e02d81d.chunk.css.map",
+    "static/js/2.ada7b4da.chunk.js.LICENSE.txt": "/victoria31f/mesto-react/static/js/2.ada7b4da.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/victoria31f/mesto-react/static/media/trash-icon.5b1a1cdd.svg",
+    "static/media/close.8a65f75d.svg": "/victoria31f/mesto-react/static/media/close.8a65f75d.svg",
+    "static/media/logo.fad4f8a5.svg": "/victoria31f/mesto-react/static/media/logo.fad4f8a5.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.560d73ee.js",
+    "static/js/2.ada7b4da.chunk.js",
+    "static/css/main.1e02d81d.chunk.css",
+    "static/js/main.985c3584.chunk.js"
+  ]
+}
