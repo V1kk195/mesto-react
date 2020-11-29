@@ -15,6 +15,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "deploy": "npm run build && scp -r ./build/* root@193.168.3.168:/root/mesto-frontend",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

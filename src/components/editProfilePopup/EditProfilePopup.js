@@ -6,11 +6,11 @@ function EditProfilePopup(props) {
     const currentUser = React.useContext(CurrentUserContext);
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
-    const buttonRef = React.useRef();
     const [errors, setErrors] = React.useState({name: '', description: ''});
     const [formValid, setFormValid] = React.useState(false);
     const [nameValid, setNameValid] = React.useState(false);
     const [descriptionValid, setDescriptionValid] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false)
 
     React.useEffect(() => {
         setName(currentUser.name || '');
@@ -49,7 +49,6 @@ function EditProfilePopup(props) {
         validateForm();
     }, [nameValid, descriptionValid])
 
-
     const handleNameChange = (e) => {
         setName(e.target.value);
     }
@@ -66,8 +65,15 @@ function EditProfilePopup(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.onUpdateUser(name, description);
+        setIsLoading(true);
     }
+
+    React.useEffect(() => {
+        if(name !== '' || description !== '') {
+            props.onUpdateUser(name, description);
+            setIsLoading(() => false);
+        }
+    }, [isLoading])
 
     return (
         <PopupWithForm title="Редактировать профиль" name="user-profile" isOpen={props.isOpen} onClose={handleClose} onSubmit={handleSubmit} >
@@ -81,8 +87,10 @@ function EditProfilePopup(props) {
             <span className="error-message" id="error-about">
                 {errors.description || ''}
             </span>
-            <button ref={buttonRef} type="submit" className={`edit-profile__button popup__button field-not-clickable ${formValid && "popup__button_active"}`}
-                    id="edit-profile__button" disabled={!formValid} >Сохранить</button>
+            <button type="submit" className={`edit-profile__button popup__button field-not-clickable ${formValid && "popup__button_active"}`}
+                    id="edit-profile__button" disabled={!formValid || isLoading} >
+                {isLoading ? <span>Загрузка...</span> : <span>Сохранить</span>}
+            </button>
         </PopupWithForm>
     )
 }
