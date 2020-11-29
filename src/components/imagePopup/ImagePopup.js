@@ -4,9 +4,10 @@ import closeIcon from "../../images/close.svg";
 function ImagePopup(props) {
     return (
         <div className={`popup ${props.card && 'popup_is-opened'}`}>
-            <div className="field-not-clickable image-popup__content" id="popup-content">
+            <div className="popup__close-field" onClick={props.onClose} />
+            <div className="image-popup__content" id="popup-content">
                 <img src={closeIcon} alt="" className="popup__close new-card__close" onClick={props.onClose} />
-                <img alt="card" className="image-popup__image field-not-clickable" src={props.card} />
+                <img alt="card" className="image-popup__image" src={props.card} />
             </div>
         </div>
     );

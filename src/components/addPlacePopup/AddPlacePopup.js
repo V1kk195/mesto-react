@@ -75,17 +75,17 @@ function AddPlacePopup(props) {
 
     return (
         <PopupWithForm title="Новое место" name="new-card" isOpen={props.isOpen} onClose={handleClose} onSubmit={handleSubmit} >
-            <input value={name} type="text" name="name" id="imgname" className="popup__input popup__input_type_name field-not-clickable"
+            <input value={name} type="text" name="name" id="imgname" className="popup__input popup__input_type_name"
                    placeholder="Название" onChange={handleNameChange} />
             <span className="error-message" id="error-imgname">
                 {errors.name || ''}
             </span>
-            <input ref={linkFieldRef} value={link} type="URL" name="link" id="link" className="popup__input popup__input_type_link-url field-not-clickable"
+            <input ref={linkFieldRef} value={link} type="URL" name="link" id="link" className="popup__input popup__input_type_link-url"
                    placeholder="Ссылка на картинку" onChange={handleLinkChange} />
             <span className="error-message" id="error-link">
                 {errors.link || ''}
             </span>
-            <button ref={buttonRef} type="submit" className={`button popup__button field-not-clickable ${formValid && "popup__button_active"}`} disabled={!formValid}>+</button>
+            <button ref={buttonRef} type="submit" className={`button popup__button ${formValid && "popup__button_active"}`} disabled={!formValid}>+</button>
         </PopupWithForm>
     )
 }

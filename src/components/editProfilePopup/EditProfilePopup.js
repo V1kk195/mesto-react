@@ -77,17 +77,17 @@ function EditProfilePopup(props) {
 
     return (
         <PopupWithForm title="Редактировать профиль" name="user-profile" isOpen={props.isOpen} onClose={handleClose} onSubmit={handleSubmit} >
-            <input type="text" value={name} name="username" id="username" required className="popup__input popup__input_type_username field-not-clickable"
+            <input type="text" value={name} name="username" id="username" required className="popup__input popup__input_type_username"
                    placeholder="Имя" onChange={handleNameChange} />
             <span className="error-message" id="error-username">
                 {errors.name || ''}
             </span>
-            <input type="text" value={description} name="about" id="about" required className="popup__input popup__input_type_about field-not-clickable"
+            <input type="text" value={description} name="about" id="about" required className="popup__input popup__input_type_about"
                    placeholder="О себе" onChange={handleDescriptionChange} />
             <span className="error-message" id="error-about">
                 {errors.description || ''}
             </span>
-            <button type="submit" className={`edit-profile__button popup__button field-not-clickable ${formValid && "popup__button_active"}`}
+            <button type="submit" className={`edit-profile__button popup__button ${formValid && "popup__button_active"}`}
                     id="edit-profile__button" disabled={!formValid || isLoading} >
                 {isLoading ? <span>Загрузка...</span> : <span>Сохранить</span>}
             </button>
