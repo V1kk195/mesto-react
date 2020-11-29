@@ -1,7 +1,7 @@
 {
   "name": "mesto-react",
   "version": "0.1.0",
-  "homepage": "https://github.com/victoria31f/mesto-react",
+  "homepage": "https://victoria31f.github.io/mesto-react/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",
@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "deploy": "npm run build && gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

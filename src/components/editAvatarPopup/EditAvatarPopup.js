@@ -63,12 +63,12 @@ function EditAvatarPopup(props) {
 
     return (
         <PopupWithForm title="Изменить аватар" name="avatar" isOpen={props.isOpen} onClose={handleClose} onSubmit={handleSubmit} >
-            <input ref={inputRef} value={link} type="URL" name="link" id="link" className="popup__input field-not-clickable"
+            <input ref={inputRef} value={link} type="URL" name="link" id="link" className="popup__input"
                    placeholder="Ссылка на картинку" onChange={handleChange} />
             <span className="error-message" id="error-link">
                 {errors.link || ''}
             </span>
-            <button ref={buttonRef} type="submit" className={`button popup__button field-not-clickable ${formValid && "popup__button_active"}`} disabled={!formValid}>+</button>
+            <button ref={buttonRef} type="submit" className={`button popup__button ${formValid && "popup__button_active"}`} disabled={!formValid}>+</button>
         </PopupWithForm>
     )
 }
