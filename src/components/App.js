@@ -1,4 +1,5 @@
 import React from 'react';
+import debounce from 'lodash.debounce';
 
 import Header from "./header/Header";
 import Main from "./main/Main";
@@ -6,6 +7,7 @@ import ImagePopup from "./imagePopup/ImagePopup";
 import EditProfilePopup from "./editProfilePopup/EditProfilePopup";
 import EditAvatarPopup from "./editAvatarPopup/EditAvatarPopup";
 import AddPlacePopup from "./addPlacePopup/AddPlacePopup";
+import Preloader from "./preloader/Preloader";
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -17,7 +19,35 @@ function App() {
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [currentUser, setCurrentUser] = React.useState({});
     const [cards, setCards] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [hasMore, setHasMore] = React.useState(true);
+    const [error, setError] = React.useState(null);
 
+    window.onscroll = debounce(() => {
+        if (error || isLoading || !hasMore) return;
+
+        if (window.innerHeight + document.documentElement.scrollTop
+            >= document.documentElement.offsetHeight - 1) {
+            loadCards();
+        }
+    }, 1000);
+
+    const loadCards = () => {
+        setIsLoading(true);
+        api.getInitialCards()
+            .then(cardsArr => {
+                if(!Array.isArray(cardsArr)) return  Promise.reject(cardsArr.message);
+                setHasMore(() => cards.length < cardsArr.length);
+                setIsLoading(false);
+                setCards(prevState => cardsArr.splice(0, prevState.length + 6));
+            })
+            .catch(err => {
+                console.log(err);
+                setError(err.message);
+                setIsLoading(false);
+                return err;
+            })
+    }
 
     React.useEffect(() => {
         api.getUserInfo()
@@ -35,7 +65,7 @@ function App() {
         api.getInitialCards()
             .then(data => {
                 if(!Array.isArray(data)) return  Promise.reject(data.message);
-                setCards(data.splice(0,14));
+                setCards(data.splice(0,6));
             })
             .catch(err => {
                 console.log(err);
