@@ -1,0 +1,6 @@
+@import "./__text/preloader-block__text.css";
+@import "./_opened/preloader-block_opened.css";
+
+.preloader-block {
+    display: none;
+}

@@ -183,6 +183,8 @@ function App() {
                     onCardDelete={handleCardDelete}
                 >
 
+                    <Preloader isOpen={isLoading} />
+
                     <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
                     <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
