@@ -22,7 +22,8 @@ function App() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [hasMore, setHasMore] = React.useState(true);
     const [error, setError] = React.useState(null);
-    const newCardsNumber = 9;
+    const width = window.innerWidth;
+    const newCardsNumber = width >= 2482 ? 14 : width >= 2182 ? 12 : width >= 1882 ? 10 : 12;
 
     window.onscroll = debounce(() => {
         if (window.innerHeight + document.documentElement.scrollTop
