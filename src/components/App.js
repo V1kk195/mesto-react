@@ -22,24 +22,24 @@ function App() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [hasMore, setHasMore] = React.useState(true);
     const [error, setError] = React.useState(null);
+    const newCardsNumber = 9;
 
     window.onscroll = debounce(() => {
-        if (error || isLoading || !hasMore) return;
-
         if (window.innerHeight + document.documentElement.scrollTop
             >= document.documentElement.offsetHeight - 1) {
+            if (error || isLoading || !hasMore) return;
+            setIsLoading(true);
             loadCards();
         }
-    }, 1000);
+    }, 100);
 
     const loadCards = () => {
-        setIsLoading(true);
         api.getInitialCards()
             .then(cardsArr => {
                 if(!Array.isArray(cardsArr)) return  Promise.reject(cardsArr.message);
                 setHasMore(() => cards.length < cardsArr.length);
                 setIsLoading(false);
-                setCards(prevState => cardsArr.splice(0, prevState.length + 6));
+                setCards(cardsArr.splice(0, cards.length + newCardsNumber));
             })
             .catch(err => {
                 console.log(err);
@@ -62,12 +62,15 @@ function App() {
     }, [])
 
     React.useEffect(() => {
+        setIsLoading(true);
         api.getInitialCards()
             .then(data => {
                 if(!Array.isArray(data)) return  Promise.reject(data.message);
-                setCards(data.splice(0,6));
+                setCards(data.splice(0, newCardsNumber));
+                setIsLoading(false);
             })
             .catch(err => {
+                setIsLoading(false);
                 console.log(err);
                 return err;
             })
