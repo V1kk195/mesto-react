@@ -1,4 +1,5 @@
 import React from 'react';
+import debounce from 'lodash.debounce';
 
 import Header from "./header/Header";
 import Main from "./main/Main";
@@ -6,6 +7,7 @@ import ImagePopup from "./imagePopup/ImagePopup";
 import EditProfilePopup from "./editProfilePopup/EditProfilePopup";
 import EditAvatarPopup from "./editAvatarPopup/EditAvatarPopup";
 import AddPlacePopup from "./addPlacePopup/AddPlacePopup";
+import Preloader from "./preloader/Preloader";
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -17,7 +19,35 @@ function App() {
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [currentUser, setCurrentUser] = React.useState({});
     const [cards, setCards] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [hasMore, setHasMore] = React.useState(true);
+    const [error, setError] = React.useState(null);
+    const newCardsNumber = 9;
 
+    window.onscroll = debounce(() => {
+        if (window.innerHeight + document.documentElement.scrollTop
+            >= document.documentElement.offsetHeight - 1) {
+            if (error || isLoading || !hasMore) return;
+            setIsLoading(true);
+            loadCards();
+        }
+    }, 100);
+
+    const loadCards = () => {
+        api.getInitialCards()
+            .then(cardsArr => {
+                if(!Array.isArray(cardsArr)) return  Promise.reject(cardsArr.message);
+                setHasMore(() => cards.length < cardsArr.length);
+                setIsLoading(false);
+                setCards(cardsArr.splice(0, cards.length + newCardsNumber));
+            })
+            .catch(err => {
+                console.log(err);
+                setError(err.message);
+                setIsLoading(false);
+                return err;
+            })
+    }
 
     React.useEffect(() => {
         api.getUserInfo()
@@ -32,12 +62,15 @@ function App() {
     }, [])
 
     React.useEffect(() => {
+        setIsLoading(true);
         api.getInitialCards()
             .then(data => {
                 if(!Array.isArray(data)) return  Promise.reject(data.message);
-                setCards(data.splice(0,14));
+                setCards(data.splice(0, newCardsNumber));
+                setIsLoading(false);
             })
             .catch(err => {
+                setIsLoading(false);
                 console.log(err);
                 return err;
             })
@@ -152,6 +185,8 @@ function App() {
                     onCardLike={handleCardLike}
                     onCardDelete={handleCardDelete}
                 >
+
+                    <Preloader isOpen={isLoading} />
 
                     <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
