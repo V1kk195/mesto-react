@@ -23,6 +23,8 @@ This is a study project. It represents a user page with a feed of this user's an
   added
  . It's impossible to delete other
   users' cards.
+  
+  NB: Presence of empty and repeated cards is not a bug. These are other users' cards.
 
  ## Technologies used
  - HTML5
